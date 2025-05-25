@@ -289,32 +289,74 @@ def criar_contrato(nome, nif, morada, passaporte, emitido, valido, funcao, salar
 
 st.write("# Contrato de Trabalho")
 
-st_nome = st.text_input("Nome")
-st_nif = st.text_input("NIF")
-st_morada = st.text_input("Endereço")
-st_passaporte = st.text_input("Passaporte")
-st_emitido = st.text_input("Data de Emissão do Passaporte")
-st_valido = st.text_input("Data de Validade do Passaporte")
-st_residencia = st.text_input("Título de Residência", "n")
-st_emitido_r = st.text_input("Data de Emissão do Título", "n")
-st_valido_r = st.text_input("Data de Validade do Título", "n")
-st_funcao = st.text_input("Função")
-st_salario = st.text_input("Salário", "870,00")
-st_inicio = st.text_input("Data de Início do Contrato")
-st_fim = st.text_input("Data de Término do Contrato")
-st_tele = st.selectbox("Modalidade do trabalho ?",("Teletrabalho", "Presencial"))
-st_pass_ou_res = st.selectbox("Qual documento ele tem ?",("Passaporte", "Título de Residência", "Ambos"))
+with st.container():
+    col1, col2 = st.columns(2)
 
-if st.button('Criar Contrato'):
-    criar_contrato(nome=st_nome, nif=st_nif, morada=st_morada, passaporte=st_passaporte, emitido=st_emitido, valido=st_valido, funcao=st_funcao, salario=st_salario, inicio=st_inicio, fim=st_fim, residencia=st_residencia, emitido_r=st_emitido_r, valido_r=st_valido_r, tele=st_tele, pass_ou_res=st_pass_ou_res)
+    with col1:
+        st_nome = st.text_input("Nome")
 
-    with open("contrato.pdf", "rb") as f:
-        pdf_bytes = f.read()
+    with col2:
+        st_nif = st.text_input("NIF")
 
-    st.download_button(
-        label="Baixar Contrato",
-        file_name="contrato.pdf",
-        data=pdf_bytes,
-        mime="application/pdf",
-        icon=":material/download:",
-    )
+with st.container():
+    st_morada = st.text_input("Endereço")
+    
+
+with st.container():
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st_passaporte = st.text_input("Passaporte")
+        st_emitido = st.text_input("Data de Emissão do Passaporte")
+        st_valido = st.text_input("Data de Validade do Passaporte")
+
+    with col2:
+        st_residencia = st.text_input("Título de Residência", "Não tem")
+        st_emitido_r = st.text_input("Data de Emissão do Título", "Não tem")
+        st_valido_r = st.text_input("Data de Validade do Título", "Não tem")
+
+with st.container():
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st_funcao = st.text_input("Função")
+
+    with col2:
+        st_salario = st.text_input("Salário", "870,00")
+    
+with st.container():
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st_inicio = st.text_input("Data de Início do Contrato")
+
+    with col2:
+        st_fim = st.text_input("Data de Término do Contrato")
+
+with st.container():
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st_tele = st.selectbox("Modalidade do trabalho ?",("Teletrabalho", "Presencial"))
+
+    with col2:
+        st_pass_ou_res = st.selectbox("Qual documento ele tem ?",("Passaporte", "Título de Residência", "Ambos"))
+
+with st.container():
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st_nome_doc = st.text_input("Nome do documento")
+        if st.button('Criar Contrato'):
+            criar_contrato(nome=st_nome, nif=st_nif, morada=st_morada, passaporte=st_passaporte, emitido=st_emitido, valido=st_valido, funcao=st_funcao, salario=st_salario, inicio=st_inicio, fim=st_fim, residencia=st_residencia, emitido_r=st_emitido_r, valido_r=st_valido_r, tele=st_tele, pass_ou_res=st_pass_ou_res)
+
+            with open("contrato.pdf", "rb") as f:
+                pdf_bytes = f.read()
+
+            st.download_button(
+                label="Baixar Contrato",
+                file_name=f"{st_nome_doc}.pdf",
+                data=pdf_bytes,
+                mime="application/pdf",
+                icon=":material/download:",
+            )
